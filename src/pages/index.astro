@@ -1,7 +1,64 @@
 ---
-import Tarjetas from "../components/tarjetas.astro";
+import Tarjetas from "../components/Tarjetas.astro";
 import Welcome from "../components/Welcome.astro";
 import Layout from "../layouts/Layout.astro";
+const listadecanciones = [
+  {
+    titulo: "Passionfruit",
+    artista: "DRAKE",
+    tiempo: "4:58",
+    imagen: "/passion.jpg"
+  },
+  {
+    titulo: "Flashing lights",
+    artista: "Kanye West",
+    tiempo: "3:57",
+    imagen: "/flash.jpg"
+  },
+  {
+    titulo: "Always",
+    artista: "DANIEL CAESAR",
+    tiempo: "3:45",
+    imagen: "/always.png"
+  },
+  {
+    titulo: "YUKON",
+    artista: "Justin Bieber",
+    tiempo: "2:43",
+    imagen: "/yukon.jpg"
+  },
+  {
+    titulo: "DtMF",
+    artista: "Bad Bunny",
+    tiempo: "3:57",
+    imagen: "/dtmf.png"
+  },
+  {
+    titulo: "Risk It All",
+    artista: "Bruno Mars",
+    tiempo: "3:24",
+    imagen: "/risk.jpg"
+  },
+  {
+    titulo: "PRIDE.",
+    artista: "Kendric Lamar",
+    tiempo: "4:35",
+    imagen: "/pride.jpg"
+  },
+  {
+    titulo:"Billie Jean",
+    artista:"Michael Jackson",
+    tiempo:"4:54",
+    imagen:"/jean.jpg"
+  },
+  {
+    titulo:"Beauty And A Beat",
+    artista:"Justin Bieber",
+    tiempo:"3:48",
+    imagen:"/bab.jpg"
+  },
+]
+    
 ---
 
 <Layout>
@@ -12,16 +69,14 @@ import Layout from "../layouts/Layout.astro";
     </div>
 
     <div class="flex flex-col gap-8 justify-start">
-      <Tarjetas titulo="Passionfruit" artista="DRAKE" tiempo="4:58" imagen="/passion.jpg" />
-      <Tarjetas titulo="Flashing lights" artista="Kanye West" tiempo="3:57" imagen="/flash.jpg" />
-      <Tarjetas titulo="Always" artista="DANIEL CAESAR" tiempo="3:45" imagen="/always.png" />
-      <Tarjetas titulo="YUKON" artista="Justin Bieber" tiempo="2:43" imagen="/yukon.jpg" />
-      <Tarjetas titulo="DtMF" artista="Bad Bunny" tiempo="3:57" imagen="/dtmf.png" />
-      <Tarjetas titulo="Risk It All" artista="Bruno Mars" tiempo="3:24" imagen="/risk.jpg" />
-      <Tarjetas titulo="PRIDE." artista="Kendric Lamar" tiempo="4:35" imagen="/pride.jpg" />
-	  <Tarjetas titulo="Billie Jean" artista="Michael Jackson" tiempo="4:54" imagen="/jean.jpg" />
-	  <Tarjetas titulo="Beauty And A Beat" artista="Justin Bieber" tiempo="3:48" imagen="/bab.jpg" />
-	  <Tarjetas titulo="PREACHER MAN" artista="Kanye West" tiempo="3:01" imagen="/ye.jpg" />
+      {listadecanciones.map((cancion) => (
+        <Tarjetas 
+          titulo={cancion.titulo}
+          artista={cancion.artista}
+          tiempo={cancion.tiempo}
+          imagen={cancion.imagen}
+        />
+      ))}
 	</div>
 
   </section>
