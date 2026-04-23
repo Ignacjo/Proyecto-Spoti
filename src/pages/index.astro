@@ -1,28 +1,23 @@
 ---
-import Tarjetas from "../components/tarjetas.astro";
+import Tarjetas from "../components/Tarjetas.astro";
 import Welcome from "../components/Welcome.astro";
 import Layout from "../layouts/Layout.astro";
+const response = await fetch("https://api.institutoalfa.org/api/songs");
+const { songs } = await response.json();
 ---
 
 <Layout>
-    <section class="bg-black min-h-screen p-10">
-    
+  <section class="bg-black min-h-screen p-10">
     <div class="flex justify-start mb-5">
       <p class="text-white text-4xl font-bold">Popular Songs</p>
     </div>
 
     <div class="flex flex-col gap-8 justify-start">
-      <Tarjetas titulo="Passionfruit" artista="DRAKE" tiempo="4:58" imagen="/passion.jpg" />
-      <Tarjetas titulo="Flashing lights" artista="Kanye West" tiempo="3:57" imagen="/flash.jpg" />
-      <Tarjetas titulo="Always" artista="DANIEL CAESAR" tiempo="3:45" imagen="/always.png" />
-      <Tarjetas titulo="YUKON" artista="Justin Bieber" tiempo="2:43" imagen="/yukon.jpg" />
-      <Tarjetas titulo="DtMF" artista="Bad Bunny" tiempo="3:57" imagen="/dtmf.png" />
-      <Tarjetas titulo="Risk It All" artista="Bruno Mars" tiempo="3:24" imagen="/risk.jpg" />
-      <Tarjetas titulo="PRIDE." artista="Kendric Lamar" tiempo="4:35" imagen="/pride.jpg" />
-	  <Tarjetas titulo="Billie Jean" artista="Michael Jackson" tiempo="4:54" imagen="/jean.jpg" />
-	  <Tarjetas titulo="Beauty And A Beat" artista="Justin Bieber" tiempo="3:48" imagen="/bab.jpg" />
-	  <Tarjetas titulo="PREACHER MAN" artista="Kanye West" tiempo="3:01" imagen="/ye.jpg" />
-	</div>
-
+      {
+    songs.map((song: any) => (
+      <Tarjetas song={song} />
+    ))
+  }
+    </div>
   </section>
 </Layout>
