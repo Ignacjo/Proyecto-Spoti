@@ -4,9 +4,10 @@ import Welcome from "../components/Welcome.astro";
 import Layout from "../layouts/Layout.astro";
 const response = await fetch("https://api.institutoalfa.org/api/songs");
 const { songs } = await response.json();
+const defaultCover = songs?.[0]?.album?.image?.url ?? '';
 ---
 
-<Layout>
+<Layout defaultCover={defaultCover}>
   <section class="bg-black min-h-screen p-10">
     <div class="flex justify-start mb-5">
       <p class="text-white text-4xl font-bold">Popular Songs</p>

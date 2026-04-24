@@ -14,7 +14,7 @@ const { song } = Astro.props;
 
         <div class="flex flex-col">
             <p
-                class="text-[14px] font-bold text-white uppercase tracking-wider"
+                class="song-title text-[14px] font-bold text-white uppercase tracking-wider"
             >
                 {song.title}
             </p>
@@ -24,10 +24,49 @@ const { song } = Astro.props;
         </div>
     </div>
 
-    <p class="text-[11px] text-zinc-500 font-medium mr-2">3:00</p>
+    <p id={`duration-${song._id}`} class="text-[11px] text-zinc-500 font-medium mr-2">Loading...</p>
 </div>
 <div>
     <script define:vars={{ song }}>
+    const durationEl = document.getElementById(`duration-${song._id}`);
+    const card = document.getElementById(song._id);
+    const titleEl = card?.querySelector('.song-title');
+    const formatTime = (seconds) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.round(seconds % 60).toString().padStart(2, '0');
+        return `${mins}:${secs}`;
+    };
+
+    const setActiveState = (activeSongId) => {
+        const isActive = activeSongId === song._id;
+        if (card) {
+            card.classList.toggle('bg-green-500/10', isActive);
+            card.classList.toggle('border', isActive);
+            card.classList.toggle('border-green-500', isActive);
+        }
+        if (titleEl) {
+            titleEl.classList.toggle('text-green-400', isActive);
+        }
+    };
+
+    if (durationEl) {
+        if (song.duration) {
+            durationEl.textContent = formatTime(song.duration);
+        } else if (song.audio?.url) {
+            const audio = new Audio(song.audio.url);
+            audio.addEventListener('loadedmetadata', () => {
+                durationEl.textContent = formatTime(audio.duration || 0);
+            });
+            audio.addEventListener('error', () => {
+                durationEl.textContent = '0:00';
+            });
+        }
+    }
+
+    window.addEventListener('playSong', (event) => {
+        setActiveState(event.detail?.song?._id);
+    });
+
     document.getElementById(song._id).addEventListener('click', () => {
         const event = new CustomEvent('playSong', {
             detail: { song }
