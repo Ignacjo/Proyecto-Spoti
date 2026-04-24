@@ -9,6 +9,15 @@ const defaultCover = songs?.[0]?.album?.image?.url ?? '';
 
 <Layout defaultCover={defaultCover}>
   <section class="bg-black min-h-screen p-10">
+    <div id="current-song-card" class="mb-10 rounded-3xl overflow-hidden bg-zinc-900 p-6 border border-zinc-800 flex flex-col md:flex-row items-center gap-6">
+      <img id="current-song-cover" src={defaultCover} alt="Current song cover" class="w-full md:w-72 h-72 object-cover rounded-3xl shadow-lg" />
+      <div class="flex flex-col gap-2">
+        <p class="text-zinc-400 uppercase text-xs tracking-[0.3em]">Now playing</p>
+        <p id="current-song-title" class="text-4xl md:text-5xl font-bold text-white">{songs?.[0]?.title ?? 'Select a song'}</p>
+        <p id="current-song-author" class="text-xl text-zinc-400">{songs?.[0]?.author?.name ?? 'Tap any song to play'}</p>
+      </div>
+    </div>
+
     <div class="flex justify-start mb-5">
       <p class="text-white text-4xl font-bold">Popular Songs</p>
     </div>
@@ -22,3 +31,23 @@ const defaultCover = songs?.[0]?.album?.image?.url ?? '';
     </div>
   </section>
 </Layout>
+<script type="module">
+  const currentSongCover = document.getElementById('current-song-cover');
+  const currentSongTitle = document.getElementById('current-song-title');
+  const currentSongAuthor = document.getElementById('current-song-author');
+
+  window.addEventListener('playSong', (event) => {
+    const song = event.detail?.song;
+    if (!song) return;
+
+    if (currentSongCover) {
+      currentSongCover.src = song.album?.image?.url || currentSongCover.src;
+    }
+    if (currentSongTitle) {
+      currentSongTitle.textContent = song.title || 'Unknown title';
+    }
+    if (currentSongAuthor) {
+      currentSongAuthor.textContent = song.author?.name || 'Unknown artist';
+    }
+  });
+</script>
