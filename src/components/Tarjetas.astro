@@ -2,8 +2,8 @@
 const { song } = Astro.props;
 ---
 
-<div
-    class="flex items-center justify-between hover:bg-zinc-800/50 p-2 rounded-lg transition-colors w-full group"
+<div 
+    class="flex items-center justify-between hover:bg-zinc-800/50 p-2 rounded-lg transition-colors w-full group" id={song._id}
 >
     <div class="flex items-center gap-4">
         <img
@@ -25,4 +25,14 @@ const { song } = Astro.props;
     </div>
 
     <p class="text-[11px] text-zinc-500 font-medium mr-2">3:00</p>
+</div>
+<div>
+    <script define:vars={{ song }}>
+    document.getElementById(song._id).addEventListener('click', () => {
+        const event = new CustomEvent('playSong', {
+            detail: { song }
+        });
+        window.dispatchEvent(event);
+    });
+</script>
 </div>
