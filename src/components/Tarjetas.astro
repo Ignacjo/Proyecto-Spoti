@@ -3,7 +3,9 @@ const { song } = Astro.props;
 ---
 
 <div 
-    class="flex items-center justify-between hover:bg-zinc-800/50 p-2 rounded-lg transition-colors w-full group" id={song._id}
+    class="song-card flex items-center justify-between hover:bg-zinc-800/50 p-2 rounded-lg transition-colors w-full group" id={song._id}
+    data-title={song.title}
+    data-artist={song.author.name}
 >
     <div class="flex items-center gap-4">
         <img

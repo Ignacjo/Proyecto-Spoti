@@ -50,4 +50,15 @@ const defaultCover = songs?.[0]?.album?.image?.url ?? '';
       currentSongAuthor.textContent = song.author?.name || 'Unknown artist';
     }
   });
+
+  window.addEventListener('songSearch', (event) => {
+    const query = event.detail?.query || '';
+    const cards = document.querySelectorAll('.song-card');
+    cards.forEach((card) => {
+      const title = card.getAttribute('data-title')?.toLowerCase() || '';
+      const artist = card.getAttribute('data-artist')?.toLowerCase() || '';
+      const isMatch = title.includes(query) || artist.includes(query);
+      card.classList.toggle('hidden', query !== '' && !isMatch);
+    });
+  });
 </script>

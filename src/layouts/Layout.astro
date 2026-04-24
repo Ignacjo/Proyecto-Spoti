@@ -21,7 +21,8 @@ const { defaultCover } = Astro.props;
 			>
 				<input
 					type="text"
-					placeholder="Search for songs, artists, or albums"
+					id="search-input"
+				placeholder="Search for songs, artists, or albums"
 					class="bg-transparent outline-none text-[12px] text-zinc-300 w-full"
 				/>
 			</div>
@@ -110,6 +111,14 @@ const { defaultCover } = Astro.props;
         const time = (Number(progressBar.value) / 100) * audio.duration;
         audio.currentTime = time;
     });
+
+    const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.trim().toLowerCase();
+            window.dispatchEvent(new CustomEvent('songSearch', { detail: { query } }));
+        });
+    }
 
     window.addEventListener('playSong', (event: any) => {
         const { song } = event.detail;
